@@ -185,10 +185,10 @@ st.subheader("1. ¿Por qué no basta la tasa de recompra?")
 st.write(
     "La tasa de recompra por sí sola no es suficiente para "
     "elegir el mejor canal, porque muestra el porcentaje de "
-    "clientes que realizaron dos o más pedidos, pero no indica "
-    "cuántos clientes podrían participar en una campaña. "
-    "Por eso también debemos considerar el número de clientes "
-    "con exactamente una compra, que representa a los "
+    "clientes que realizaron dos o más pedidos, pero de igual manera no indica "
+    "cuántos clientes podrían participar en una campaña por decirlo asi. "
+    "Por eso también es necesario considerar el número de clientes "
+    "con exactamente una compra, que estarias representando a los "
     "compradores potenciales para realizar una segunda compra."
 )
 
@@ -305,6 +305,7 @@ st.write(
     "Todos los filtros se aplican simultáneamente, "
     "por lo que las métricas y ambos gráficos "
     "se actualizan según la selección."
+    "Se realizaron las siguientes pruebas para comprobar que los filtros funcionan correctamente:"
 )
 
 # Dos selecciones para comprobar los filtros
@@ -362,7 +363,7 @@ if m_vacio["compradores"] == 0:
         "Prueba sin compradores: cuando la selección "
         "no contiene compradores, las cantidades son cero "
         "y los porcentajes no se calculan. "
-        "El dashboard muestra una advertencia y evita "
+        "Ademas,el dashboard muestra una advertencia y evita "
         "la división entre cero."
     )
 
