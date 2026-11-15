@@ -176,7 +176,7 @@ else:
 
 
 st.divider()
-st.header("Respuestas del taller KORA")
+st.header("Respuestas KORA")
 
 
 # PREGUNTA 1
@@ -193,13 +193,13 @@ st.write(
 )
 
 st.write(
-    "**Tasa de recompra:** número de compradores con dos o más "
+    "Tasa de recompra:número de compradores con dos o más "
     "pedidos dividido entre el total de compradores, "
     "multiplicado por 100."
 )
 
 st.write(
-    "**Clientes con exactamente una compra:** cantidad de "
+    "Clientes con exactamente una compra: cantidad de "
     "clientes que realizaron un único pedido hasta la fecha "
     "de corte."
 )
@@ -209,14 +209,14 @@ st.write(
 st.subheader("2. Métricas de clientes con una compra")
 
 st.write(
-    f"En la selección actual hay **{m['una_compra']:,} clientes** "
+    f"En la selección actual hay {m['una_compra']:,} clientes "
     f"con exactamente una compra, de un total de "
-    f"**{m['compradores']:,} compradores**."
+    f"{m['compradores']:,} compradores."
 )
 
 if m["pct_una_compra"] is not None:
     st.write(
-        f"Estos representan el **{m['pct_una_compra']:.1f}%** "
+        f"Estos representan el {m['pct_una_compra']:.1f}% "
         f"de los compradores seleccionados."
     )
 else:
@@ -227,7 +227,7 @@ else:
 
 
 # PREGUNTA 3
-st.subheader("3. Justificación del gráfico de recompra")
+st.subheader("3. Gráfico de recompra")
 
 st.write(
     "Elegimos un gráfico de barras porque permite comparar "
@@ -266,12 +266,12 @@ if m["compradores"] > 0:
     ):
         st.write(
             f"En esta selección sí coinciden. El canal "
-            f"**{mayor_volumen['canal_adquisicion']}** "
+            f"{mayor_volumen['canal_adquisicion']} "
             f"tiene el mayor volumen de clientes con "
             f"exactamente una compra "
-            f"(**{mayor_volumen['una_compra']:,} clientes**) "
+            f"({mayor_volumen['una_compra']:,} clientes**) "
             f"y la menor tasa de recompra "
-            f"(**{menor_tasa['tasa_recompra']:.1f}%**). "
+            f"({menor_tasa['tasa_recompra']:.1f}%). "
             f"Sin embargo, esto no ocurre necesariamente "
             f"en todos los casos."
         )
@@ -279,12 +279,12 @@ if m["compradores"] > 0:
     else:
         st.write(
             f"No coinciden. El canal con mayor volumen es "
-            f"**{mayor_volumen['canal_adquisicion']}**, "
-            f"con **{mayor_volumen['una_compra']:,} clientes** "
+            f"{mayor_volumen['canal_adquisicion']}, "
+            f"con {mayor_volumen['una_compra']:,} clientes "
             f"de una compra. En cambio, la menor tasa de "
             f"recompra corresponde a "
-            f"**{menor_tasa['canal_adquisicion']}**, "
-            f"con **{menor_tasa['tasa_recompra']:.1f}%**. "
+            f"{menor_tasa['canal_adquisicion']}, "
+            f"con {menor_tasa['tasa_recompra']:.1f}%. "
             f"Esto demuestra que volumen y tasa son "
             f"medidas diferentes."
         )
@@ -336,18 +336,18 @@ if ciudades and canales and preferencias:
     m2 = metricas_recompra(prueba2)
 
     st.write(
-        f"**Prueba 1:** al seleccionar la ciudad "
-        f"**{ciudades[0]}**, se obtienen "
-        f"**{m1['compradores']:,} compradores** y "
-        f"**{m1['una_compra']:,} clientes** con una compra."
+        f"Prueba 1: al seleccionar la ciudad "
+        f"{ciudades[0]}, se obtienen "
+        f"{m1['compradores']:,} compradores y "
+        f"{m1['una_compra']:,} clientes con una compra."
     )
 
     st.write(
-        f"**Prueba 2:** al seleccionar el canal "
-        f"**{canales[0]}** y la preferencia "
-        f"**{preferencias[0]}**, se obtienen "
-        f"**{m2['compradores']:,} compradores** y "
-        f"**{m2['una_compra']:,} clientes** con una compra."
+        f"Prueba 2:al seleccionar el canal "
+        f"{canales[0]} y la preferencia "
+        f"{preferencias[0]}, se obtienen "
+        f"{m2['compradores']:,} compradores y "
+        f"{m2['una_compra']:,} clientes con una compra."
     )
 
 # Comprobar selección sin compradores
@@ -359,7 +359,7 @@ m_vacio = metricas_recompra(vacio)
 
 if m_vacio["compradores"] == 0:
     st.write(
-        "**Prueba sin compradores:** cuando la selección "
+        "Prueba sin compradores: cuando la selección "
         "no contiene compradores, las cantidades son cero "
         "y los porcentajes no se calculan. "
         "El dashboard muestra una advertencia y evita "
@@ -392,8 +392,8 @@ if m["compradores"] > 0:
         st.write(
             f"Recomendamos iniciar un piloto de segunda compra "
             f"en {canal}, porque tiene "
-            f"**{cantidad:,} clientes con exactamente un pedido** "
-            f"y una **tasa de recompra de {tasa:.1f}%**. "
+            f"{cantidad:,} clientes con exactamente un pedido "
+            f"y una tasa de recompra de {tasa:.1f}%. "
             f"Este canal ofrece una oportunidad para incentivar "
             f"nuevas compras. Sin embargo, una limitación es "
             f"que algunos clientes han tenido menos tiempo "
