@@ -390,17 +390,19 @@ if m["compradores"] > 0:
         tasa = recomendado["tasa_recompra"]
 
         st.write(
-            f"Recomendamos iniciar un piloto de segunda compra "
-            f"en {canal}, porque tiene "
-            f"{cantidad:,} clientes con exactamente un pedido "
-            f"y una tasa de recompra de {tasa:.1f}%. "
+            f"Con el análisis expuesto, se recomienda iniciar un piloto "
+            f"de segunda compra en {canal}, esto ya que tiene "
+            f"{cantidad:,} clientes con exactamente un pedido, "
+            f"siendo el mayor volumen entre los canales, y una tasa de recompra de "
+            f"{tasa:.1f}%. Esto permitiría probar una estrategia de recompra "
             f"Este canal ofrece una oportunidad para incentivar "
-            f"nuevas compras. Sin embargo, una limitación es "
-            f"que algunos clientes han tenido menos tiempo "
-            f"para volver a comprar, lo que puede afectar "
-            f"las comparaciones. Para evaluar el piloto "
-            f"mediríamos la tasa de segunda compra de quienes "
-            f"reciben la campaña frente a un grupo de control."
+            f"sobre una población amplia con un potencial de mejora. "
+            f" Sin embargo, la baja tasa de otros canales podría estar relacionada "
+            f"con diferencias en la antigüedad de los clientes o sus hábitos "
+            f"de compra, y no necesariamente con el canal. "
+            f"Por lo que, para evaluar el piloto, se compararía el porcentaje de  "
+            f"clientes que realizan una segunda compra entre un grupo"
+            f" que recibe la campaña y otro grupo de control."
         )
 
     else:
