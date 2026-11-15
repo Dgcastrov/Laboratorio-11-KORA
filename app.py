@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 
-st.set_page_config(page_title="KORA | Conociendo a nuestros clientes", layout="wide")
+st.set_page_config(page_title="KORA", layout="wide")
 st.title("KORA | Conociendo a nuestros clientes")
 st.caption("Decisión: ¿en qué canal probar una campaña para motivar una segunda compra? "
            "· Usuario: Gerente de Marketing · Corte: 31/10/2026 · Ingresos en COP")
