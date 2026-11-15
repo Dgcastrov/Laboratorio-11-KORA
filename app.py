@@ -175,3 +175,242 @@ else:
 
 
 
+st.divider()
+st.header("Respuestas del taller KORA")
+
+
+# PREGUNTA 1
+st.subheader("1. ¿Por qué no basta la tasa de recompra?")
+
+st.write(
+    "La tasa de recompra por sí sola no es suficiente para "
+    "elegir el mejor canal, porque muestra el porcentaje de "
+    "clientes que realizaron dos o más pedidos, pero no indica "
+    "cuántos clientes podrían participar en una campaña. "
+    "Por eso también debemos considerar el número de clientes "
+    "con exactamente una compra, que representa a los "
+    "compradores potenciales para realizar una segunda compra."
+)
+
+st.write(
+    "**Tasa de recompra:** número de compradores con dos o más "
+    "pedidos dividido entre el total de compradores, "
+    "multiplicado por 100."
+)
+
+st.write(
+    "**Clientes con exactamente una compra:** cantidad de "
+    "clientes que realizaron un único pedido hasta la fecha "
+    "de corte."
+)
+
+
+# PREGUNTA 2
+st.subheader("2. Métricas de clientes con una compra")
+
+st.write(
+    f"En la selección actual hay **{m['una_compra']:,} clientes** "
+    f"con exactamente una compra, de un total de "
+    f"**{m['compradores']:,} compradores**."
+)
+
+if m["pct_una_compra"] is not None:
+    st.write(
+        f"Estos representan el **{m['pct_una_compra']:.1f}%** "
+        f"de los compradores seleccionados."
+    )
+else:
+    st.write(
+        "No es posible calcular el porcentaje porque "
+        "no hay compradores en la selección."
+    )
+
+
+# PREGUNTA 3
+st.subheader("3. Justificación del gráfico de recompra")
+
+st.write(
+    "Elegimos un gráfico de barras porque permite comparar "
+    "fácilmente el porcentaje de compradores que realizaron "
+    "dos o más pedidos en cada canal. Además, las etiquetas "
+    "y la información interactiva muestran cuántos compradores "
+    "componen cada tasa, lo que ayuda a interpretar los "
+    "porcentajes considerando el tamaño de cada grupo."
+)
+
+
+# PREGUNTA 4
+st.subheader("4. Comparación de clientes con una compra")
+
+st.write(
+    "El segundo gráfico está ordenado de mayor a menor "
+    "para identificar los canales con más clientes que "
+    "todavía no realizan una segunda compra."
+)
+
+if m["compradores"] > 0:
+
+    t_respuestas = tabla_canales(df_sel)
+
+    mayor_volumen = t_respuestas.sort_values(
+        "una_compra", ascending=False
+    ).iloc[0]
+
+    menor_tasa = t_respuestas.sort_values(
+        "tasa_recompra", ascending=True
+    ).iloc[0]
+
+    if (
+        mayor_volumen["canal_adquisicion"]
+        == menor_tasa["canal_adquisicion"]
+    ):
+        st.write(
+            f"En esta selección sí coinciden. El canal "
+            f"**{mayor_volumen['canal_adquisicion']}** "
+            f"tiene el mayor volumen de clientes con "
+            f"exactamente una compra "
+            f"(**{mayor_volumen['una_compra']:,} clientes**) "
+            f"y la menor tasa de recompra "
+            f"(**{menor_tasa['tasa_recompra']:.1f}%**). "
+            f"Sin embargo, esto no ocurre necesariamente "
+            f"en todos los casos."
+        )
+
+    else:
+        st.write(
+            f"No coinciden. El canal con mayor volumen es "
+            f"**{mayor_volumen['canal_adquisicion']}**, "
+            f"con **{mayor_volumen['una_compra']:,} clientes** "
+            f"de una compra. En cambio, la menor tasa de "
+            f"recompra corresponde a "
+            f"**{menor_tasa['canal_adquisicion']}**, "
+            f"con **{menor_tasa['tasa_recompra']:.1f}%**. "
+            f"Esto demuestra que volumen y tasa son "
+            f"medidas diferentes."
+        )
+
+else:
+    st.write(
+        "No hay compradores en la selección actual "
+        "para comparar los canales."
+    )
+
+
+# PREGUNTA 5
+st.subheader("5. Funcionamiento de los filtros")
+
+st.write(
+    "El dashboard permite filtrar por ciudad, canal de "
+    "adquisición, segmento y preferencia declarada. "
+    "Todos los filtros se aplican simultáneamente, "
+    "por lo que las métricas y ambos gráficos "
+    "se actualizan según la selección."
+)
+
+# Dos selecciones para comprobar los filtros
+ciudades = sorted(df["ciudad"].dropna().unique().tolist())
+canales = sorted(df["canal_adquisicion"].dropna().unique().tolist())
+preferencias = sorted(
+    df["preferencia_declarada"].dropna().unique().tolist()
+)
+
+if ciudades and canales and preferencias:
+
+    prueba1 = filtrar(
+        df,
+        [ciudades[0]],
+        canales,
+        ORDEN_SEGMENTOS,
+        preferencias
+    )
+
+    prueba2 = filtrar(
+        df,
+        ciudades,
+        [canales[0]],
+        ORDEN_SEGMENTOS,
+        [preferencias[0]]
+    )
+
+    m1 = metricas_recompra(prueba1)
+    m2 = metricas_recompra(prueba2)
+
+    st.write(
+        f"**Prueba 1:** al seleccionar la ciudad "
+        f"**{ciudades[0]}**, se obtienen "
+        f"**{m1['compradores']:,} compradores** y "
+        f"**{m1['una_compra']:,} clientes** con una compra."
+    )
+
+    st.write(
+        f"**Prueba 2:** al seleccionar el canal "
+        f"**{canales[0]}** y la preferencia "
+        f"**{preferencias[0]}**, se obtienen "
+        f"**{m2['compradores']:,} compradores** y "
+        f"**{m2['una_compra']:,} clientes** con una compra."
+    )
+
+# Comprobar selección sin compradores
+vacio = filtrar(
+    df, [], canales, ORDEN_SEGMENTOS, preferencias
+)
+
+m_vacio = metricas_recompra(vacio)
+
+if m_vacio["compradores"] == 0:
+    st.write(
+        "**Prueba sin compradores:** cuando la selección "
+        "no contiene compradores, las cantidades son cero "
+        "y los porcentajes no se calculan. "
+        "El dashboard muestra una advertencia y evita "
+        "la división entre cero."
+    )
+
+
+# PREGUNTA 6
+st.subheader("6. Recomendación para el piloto")
+
+if m["compradores"] > 0:
+
+    t_recomendacion = tabla_canales(df_sel)
+
+    elegibles = t_recomendacion[
+        t_recomendacion["una_compra"] > 0
+    ]
+
+    if not elegibles.empty:
+
+        recomendado = elegibles.sort_values(
+            ["una_compra", "tasa_recompra"],
+            ascending=[False, True]
+        ).iloc[0]
+
+        canal = recomendado["canal_adquisicion"]
+        cantidad = int(recomendado["una_compra"])
+        tasa = recomendado["tasa_recompra"]
+
+        st.write(
+            f"Recomendamos iniciar un piloto de segunda compra "
+            f"en **{canal}**, porque tiene "
+            f"**{cantidad:,} clientes con exactamente un pedido** "
+            f"y una **tasa de recompra de {tasa:.1f}%**. "
+            f"Este canal ofrece una oportunidad para incentivar "
+            f"nuevas compras. Sin embargo, una limitación es "
+            f"que algunos clientes han tenido menos tiempo "
+            f"para volver a comprar, lo que puede afectar "
+            f"las comparaciones. Para evaluar el piloto "
+            f"mediríamos la tasa de segunda compra de quienes "
+            f"reciben la campaña frente a un grupo de control."
+        )
+
+    else:
+        st.write(
+            "No hay clientes con exactamente una compra "
+            "en la selección actual para recomendar un piloto."
+        )
+
+else:
+    st.write(
+        "No es posible recomendar un canal porque "
+        "no hay compradores en la selección actual."
+    )
