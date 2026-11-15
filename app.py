@@ -252,11 +252,13 @@ if m["compradores"] == 0:
 
 else:
     t = tabla_canales(df_sel)
-
+    
     st.plotly_chart(
-        grafico_tasa(t),
-        use_container_width=True
-    )
+    grafico_tasa(t),
+    use_container_width=True,
+    key="grafico_tasa_recompra")
+
+   
 
     st.write(
         "**Justificación del gráfico:** Se utiliza un gráfico "
