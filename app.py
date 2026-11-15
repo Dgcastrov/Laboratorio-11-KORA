@@ -391,7 +391,7 @@ if m["compradores"] > 0:
 
         st.write(
             f"Recomendamos iniciar un piloto de segunda compra "
-            f"en **{canal}**, porque tiene "
+            f"en {canal}, porque tiene "
             f"**{cantidad:,} clientes con exactamente un pedido** "
             f"y una **tasa de recompra de {tasa:.1f}%**. "
             f"Este canal ofrece una oportunidad para incentivar "
